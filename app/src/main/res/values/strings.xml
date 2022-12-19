@@ -5,6 +5,11 @@
     <string name="no_data">No Data</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="search">查找</string>
+    <string name="sort_by">排序规则</string>
+    <string name="priority_high">高优先级</string>
+    <string name="priority_low">低优先级</string>
+    <string name="delete_all">删除全部</string>
 
     <string-array name="priorities">
         <item>High Priority</item>

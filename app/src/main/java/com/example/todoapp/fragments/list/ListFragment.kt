@@ -3,10 +3,8 @@ package com.example.todoapp.fragments.list
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +35,17 @@ class ListFragment : Fragment() {
             // 2. 跳转到updateFragment
             findNavController().navigate(R.id.action_listFragment_to_updateFragment)
         }
+
+        // 设置menu
+        setHasOptionsMenu(true)
+
         return view
+    }
+
+    // 重写menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // 1. 加载menu
+        inflater.inflate(R.menu.list_fragment_menu, menu)
     }
 
 }
