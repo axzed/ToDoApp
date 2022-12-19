@@ -11,6 +11,8 @@
     <string name="priority_low">低优先级</string>
     <string name="delete_all">删除全部</string>
     <string name="add">新增</string>
+    <string name="save">保存</string>
+    <string name="delete">删除</string>
 
     <string-array name="priorities">
         <item>高优先级</item>
