@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 // 用@Database注解 传入实体类和版本号生成数据库
+// 用@TypeConverters注解 传入Converter类
 @Database(entities = [ToDoData::class], version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class ToDoDatabase: RoomDatabase() {
     // 用abstract修饰，返回一个ToDoDao
     abstract fun toDoDao(): ToDoDao
