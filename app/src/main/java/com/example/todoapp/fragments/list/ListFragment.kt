@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet.Layout
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
@@ -26,6 +29,13 @@ class ListFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.addButton).setOnClickListener {
             // 跳转到添加页面
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
+
+        // 通过点击listLayout中的任意地方跳转到updateFragment
+        view.findViewById<ConstraintLayout>(R.id.listLayout).setOnClickListener {
+            // 1. 获取导航控制器
+            // 2. 跳转到updateFragment
+            findNavController().navigate(R.id.action_listFragment_to_updateFragment)
         }
         return view
     }
