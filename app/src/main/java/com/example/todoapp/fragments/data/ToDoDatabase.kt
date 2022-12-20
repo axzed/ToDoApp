@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.todoapp.fragments.data.model.ToDoData
 
 // 用@Database注解 传入实体类和版本号生成数据库
 // 用@TypeConverters注解 传入Converter类

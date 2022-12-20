@@ -1,6 +1,7 @@
 package com.example.todoapp.fragments.data
 
 import androidx.room.TypeConverter
+import com.example.todoapp.fragments.data.model.Priority
 
 class Converter {
 
