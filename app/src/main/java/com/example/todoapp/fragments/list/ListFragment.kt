@@ -67,4 +67,34 @@ class ListFragment : Fragment() {
         inflater.inflate(R.menu.list_fragment_menu, menu)
     }
 
+    // 重写menu的点击事件
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // 1. 判断点击的是哪个item
+        if (item.itemId == R.id.menu_delete_all) {
+            confirmRemoval()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // 删除所有数据
+    // 弹出对话框提示用户是否删除
+    private fun confirmRemoval() {
+        // 1. 创建一个对话框
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        // 2. 设置对话框的标题
+        builder.setTitle("删除所有?")
+        // 3. 设置对话框的内容
+        builder.setMessage("您确定要删除所有吗?")
+        // 4. 设置对话框的按钮
+        builder.setPositiveButton("确定") { _, _ ->
+            // 5. 删除所有数据
+            mToDoViewModel.deleteAll()
+            // 6. 提示用户
+            Toast.makeText(requireContext(), "完咯，全部数据都被删掉咯!", Toast.LENGTH_SHORT).show()
+        }
+        builder.setNegativeButton("取消") { _, _ -> }
+        // 7. 显示对话框
+        builder.create().show()
+    }
+
 }

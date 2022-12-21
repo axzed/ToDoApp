@@ -54,4 +54,13 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // 删除全部数据
+    fun deleteAll() {
+        // 用viewModelScope.launch{}启动协程
+        viewModelScope.launch(Dispatchers.IO) {
+            // 用repository.deleteAll()删除全部数据
+            repository.deleteAll()
+        }
+    }
+
 }

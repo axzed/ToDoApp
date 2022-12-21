@@ -29,4 +29,8 @@ interface ToDoDao {
     @Delete
     suspend fun deleteItem(toDoData: ToDoData)
 
+    // 删除全部数据
+    @Query("DELETE FROM todo_table")
+    suspend fun deleteAll()
+
 }

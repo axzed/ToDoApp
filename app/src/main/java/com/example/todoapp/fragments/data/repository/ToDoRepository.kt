@@ -24,4 +24,9 @@ class ToDoRepository(private val toDoDao: ToDoDao) {
         toDoDao.deleteItem(toDoData)
     }
 
+    // 用于删除全部数据
+    suspend fun deleteAll() {
+        toDoDao.deleteAll()
+    }
+
 }
