@@ -99,13 +99,13 @@ class AddFragment : Fragment() {
     private fun parsePriority(priority: String): Priority {
         // 判断优先级
         return when (priority) {
-            "High Priority" -> {
+            "高优先级" -> {
                 Priority.HIGH
             }
-            "Medium Priority" -> {
+            "中优先级" -> {
                 Priority.MEDIUM
             }
-            "Low Priority" -> {
+            "低优先级" -> {
                 Priority.LOW
             }
             else -> Priority.LOW
