@@ -1,5 +1,6 @@
 package com.example.todoapp.fragments.update
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
@@ -70,8 +71,40 @@ class UpdateFragment : Fragment() {
         if (item.itemId == R.id.menu_save) {
             // 2. 保存数据
             updateItem()
+        } else if (item.itemId == R.id.menu_delete) {
+            confirmItemRemoval()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // 当你要删除的时候显示一个对话框
+    // 用来确认是否删除
+    private fun confirmItemRemoval() {
+        // 创建一个AlertDialog
+        val builder = AlertDialog.Builder(requireContext())
+        // 设置确定按钮
+        builder.setPositiveButton("确定") { _, _ ->
+            // 1. 删除数据
+            mToDoViewModel.deleteItem(args.currentItem)
+            // 2. 显示删除成功
+            Toast.makeText(
+                requireContext(),
+                "已成功移除: ${args.currentItem.title}",
+                Toast.LENGTH_SHORT
+            ).show()
+            // 3. 返回到列表页
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        }
+        // 设置取消按钮
+        builder.setNegativeButton("取消") { _, _ -> }
+        // 设置标题
+        builder.setTitle("删除 '${args.currentItem.title}'?")
+        // 设置消息
+        builder.setMessage("你确定要删除 '${args.currentItem.title}' 吗?")
+        // 设置图标
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        // 显示AlertDialog
+        builder.create().show()
     }
 
     private fun updateItem() {

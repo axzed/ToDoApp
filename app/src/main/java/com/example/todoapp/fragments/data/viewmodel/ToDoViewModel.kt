@@ -45,4 +45,13 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // 删除数据
+    fun deleteItem(toDoData: ToDoData) {
+        // 用viewModelScope.launch{}启动协程
+        viewModelScope.launch(Dispatchers.IO) {
+            // 用repository.deleteItem()删除数据
+            repository.deleteItem(toDoData)
+        }
+    }
+
 }
