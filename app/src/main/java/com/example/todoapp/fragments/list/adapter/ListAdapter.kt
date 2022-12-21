@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
+import com.example.todoapp.databinding.RowLayoutBinding
 import com.example.todoapp.fragments.data.model.Priority
 import com.example.todoapp.fragments.data.model.ToDoData
 import com.example.todoapp.fragments.list.ListFragmentDirections
@@ -18,42 +19,35 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<ToDoData>()
 
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        // 获取itemView中的控件
-        val title_txt = itemView.findViewById<TextView>(R.id.title_txt)
-        val description_txt = itemView.findViewById<TextView>(R.id.description_txt)
-        val priority_indicator = itemView.findViewById<CardView>(R.id.priority_indicator)
-        val row_background = itemView.findViewById<ConstraintLayout>(R.id.row_background)
+    class MyViewHolder(private val binding: RowLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+
+        // This is the function that will be called in the onBindViewHolder function
+        // It will take the data from the dataList and set it to the views
+        fun bind(toDoData: ToDoData) {
+            binding.toDoData = toDoData
+            binding.executePendingBindings()
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): MyViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                // This is the binding object that will be used to access the views in the row_layout.xml
+                val binding = RowLayoutBinding.inflate(layoutInflater, parent, false)
+                return MyViewHolder(binding)
+            }
+        }
+
     }
 
     // 创建viewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        // 1. 创建view
-        // 2. 创建viewHolder
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_layout, parent, false)
-        // 3. 返回viewHolder
-        return MyViewHolder(view)
+        return MyViewHolder.from(parent)
     }
 
     // 绑定数据
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // 1. 获取数据
-        holder.title_txt.text = dataList[position].title
-        holder.description_txt.text = dataList[position].description
-        holder.row_background.setOnClickListener {
-            // 跳转到更新页面 并传递数据
-            val action =
-                ListFragmentDirections.actionListFragmentToUpdateFragment(dataList[position])
-            // 点击row_background跳转到updateFragment
-            holder.row_background.findNavController().navigate(action)
-        }
-
-        val priority = dataList[position].priority
-        when(priority) {
-            Priority.HIGH -> holder.priority_indicator.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.red))
-            Priority.MEDIUM -> holder.priority_indicator.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.yellow))
-            Priority.LOW -> holder.priority_indicator.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
-        }
+        val currentItem = dataList[position]
+        holder.bind(currentItem)
     }
 
     // 获取数据的数量

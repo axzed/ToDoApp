@@ -13,6 +13,8 @@
     <string name="add">新增</string>
     <string name="save">保存</string>
     <string name="delete">删除</string>
+    <string name="some_random_text_description">Some random text description</string>
+    <string name="my_title">My Title</string>
 
     <string-array name="priorities">
         <item>高优先级</item>

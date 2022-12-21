@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
+import com.example.todoapp.databinding.FragmentUpdateBinding
 import com.example.todoapp.fragments.data.model.Priority
 import com.example.todoapp.fragments.data.model.ToDoData
 import com.example.todoapp.fragments.data.viewmodel.SharedViewModel
@@ -29,34 +30,27 @@ class UpdateFragment : Fragment() {
     // 用来实现一些相同的逻辑 如更新数据
     private val mToDoViewModel by viewModels<ToDoViewModel>()
 
+    // 用于绑定布局
+    // use viewBinding
+    private var _binding: FragmentUpdateBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_update, container, false)
+        // DataBinding
+        _binding = FragmentUpdateBinding.inflate(inflater, container, false)
+        binding.args = args
 
         // set menu
         setHasOptionsMenu(true)
 
-        // find the view you need to manipulate
-        // find cur_title_et
-        val curTitle = view.findViewById<EditText>(R.id.cur_title_et)
-        // find cur_description_et
-        val curDescription = view.findViewById<EditText>(R.id.cur_description_et)
-        // find cur_priorities_spinner
-        val curPriorities = view.findViewById<Spinner>(R.id.cur_priorities_spinner)
+        // spinner item selected listener
+        binding.curPrioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
 
-        // set cur_title_et
-        curTitle.setText(args.currentItem.title)
-        // set cur_description_et
-        curDescription.setText(args.currentItem.description)
-        // set cur_priorities_spinner
-        curPriorities.setSelection(mSharedViewModel.parsePriorityToInt(args.currentItem.priority))
-        // set cur_priorities_spinner color
-        curPriorities.onItemSelectedListener = mSharedViewModel.listener
 
-        return view
+        return binding.root
     }
 
     // menu
@@ -144,5 +138,10 @@ class UpdateFragment : Fragment() {
 
     }
 
+    // 销毁时解绑
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

@@ -15,12 +15,17 @@ import com.example.todoapp.fragments.data.model.ToDoData
 
 class SharedViewModel(application: Application): AndroidViewModel(application) {
 
+    /** =========================================== List Fragment ============================================= */
+
     val emptyDatabase: MutableLiveData<Boolean> = MutableLiveData(true)
 
     // 检查数据库是否为空
     fun checkIfDatabaseEmpty(toDoData: List<ToDoData>) {
         emptyDatabase.value = toDoData.isEmpty()
     }
+
+
+    /** =========================================== Add/Update Fragment ============================================= */
 
     // Spinner selected item listener
     // This will be called when the user selects an item from the spinner
@@ -63,15 +68,6 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
                 Priority.LOW
             }
             else -> Priority.LOW
-        }
-    }
-
-    // parsePriority 用于解析优先级
-    fun parsePriorityToInt(priority: Priority): Int {
-        return when (priority) {
-            Priority.HIGH -> 0
-            Priority.MEDIUM -> 1
-            Priority.LOW -> 2
         }
     }
 
