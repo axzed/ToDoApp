@@ -8,10 +8,19 @@ import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.example.todoapp.R
 import com.example.todoapp.fragments.data.model.Priority
+import com.example.todoapp.fragments.data.model.ToDoData
 
 class SharedViewModel(application: Application): AndroidViewModel(application) {
+
+    val emptyDatabase: MutableLiveData<Boolean> = MutableLiveData(true)
+
+    // 检查数据库是否为空
+    fun checkIfDatabaseEmpty(toDoData: List<ToDoData>) {
+        emptyDatabase.value = toDoData.isEmpty()
+    }
 
     // Spinner selected item listener
     // This will be called when the user selects an item from the spinner
@@ -56,7 +65,6 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
             else -> Priority.LOW
         }
     }
-
 
     // parsePriority 用于解析优先级
     fun parsePriorityToInt(priority: Priority): Int {

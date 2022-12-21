@@ -1,4 +1,4 @@
-package com.example.todoapp.fragments.list
+package com.example.todoapp.fragments.list.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.fragments.data.model.Priority
 import com.example.todoapp.fragments.data.model.ToDoData
+import com.example.todoapp.fragments.list.ListFragmentDirections
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
@@ -41,7 +42,8 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.description_txt.text = dataList[position].description
         holder.row_background.setOnClickListener {
             // 跳转到更新页面 并传递数据
-            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(dataList[position])
+            val action =
+                ListFragmentDirections.actionListFragmentToUpdateFragment(dataList[position])
             // 点击row_background跳转到updateFragment
             holder.row_background.findNavController().navigate(action)
         }
