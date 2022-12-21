@@ -27,12 +27,21 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
         getAllData = repository.getAllData
     }
 
-    // 用fun修饰，返回一个Unit
+    // 插入数据
     fun insertData(toDoData: ToDoData) {
         // 用viewModelScope.launch{}启动协程
         viewModelScope.launch(Dispatchers.IO) {
             // 用repository.insertData()插入数据
             repository.insertData(toDoData)
+        }
+    }
+
+    // 更新数据
+    fun updateData(toDoData: ToDoData) {
+        // 用viewModelScope.launch{}启动协程
+        viewModelScope.launch(Dispatchers.IO) {
+            // 用repository.updateData()更新数据
+            repository.updateData(toDoData)
         }
     }
 
