@@ -15,6 +15,8 @@ abstract class ToDoDatabase: RoomDatabase() {
     // 用abstract修饰，返回一个ToDoDao
     abstract fun toDoDao(): ToDoDao
 
+    // 用companion object修饰，用于创建数据库
+    // 用@Volatile修饰，保证可见性
     companion object {
         @Volatile
         private var INSTANCE: ToDoDatabase? = null

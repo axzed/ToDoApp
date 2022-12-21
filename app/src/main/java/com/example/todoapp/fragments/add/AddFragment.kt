@@ -1,7 +1,6 @@
 package com.example.todoapp.fragments.add
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
 import android.widget.EditText
 import android.widget.Spinner
@@ -10,14 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
-import com.example.todoapp.fragments.data.model.Priority
+import com.example.todoapp.fragments.data.viewmodel.SharedViewModel
 import com.example.todoapp.fragments.data.model.ToDoData
 import com.example.todoapp.fragments.data.viewmodel.ToDoViewModel
 
 class AddFragment : Fragment() {
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
-
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -27,9 +26,16 @@ class AddFragment : Fragment() {
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add, container, false)
-        setHasOptionsMenu(true)
-        return view
 
+        // 设置菜单
+        setHasOptionsMenu(true)
+
+        // 获取spinner
+        val spinner = view.findViewById<Spinner>(R.id.priorities_spinner)
+        // 设置spinner的监听器
+        spinner.onItemSelectedListener = mSharedViewModel.listener
+
+        return view
     }
 
     // menu
@@ -63,14 +69,14 @@ class AddFragment : Fragment() {
         val mDescription = description_et?.text.toString()
 
         // 判断数据是否为空
-        val validation = verifyDataFromUser(mTitle, mDescription)
+        val validation = mSharedViewModel.verifyDataFromUser(mTitle, mDescription)
         if (validation) {
             // Insert Data to Database
             // 创建一个实体类
             val newData = ToDoData(
                 0,
                 mTitle,
-                parsePriority(mPriority),
+                mSharedViewModel.parsePriority(mPriority),
                 mDescription
             )
 
@@ -86,30 +92,6 @@ class AddFragment : Fragment() {
         }
     }
 
-    // 验证数据
-    private fun verifyDataFromUser(title: String, description: String): Boolean {
-        // 5. 判断title和description是否为空
-        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)) {
-            false
-            // 6. 如果不为空，就返回true
-        } else !(title.isEmpty() || description.isEmpty())
-    }
 
-    // parse priority string in to enum
-    private fun parsePriority(priority: String): Priority {
-        // 判断优先级
-        return when (priority) {
-            "高优先级" -> {
-                Priority.HIGH
-            }
-            "中优先级" -> {
-                Priority.MEDIUM
-            }
-            "低优先级" -> {
-                Priority.LOW
-            }
-            else -> Priority.LOW
-        }
-    }
 
 }

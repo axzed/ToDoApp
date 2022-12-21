@@ -16,7 +16,7 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
     private val toDoDao = ToDoDatabase.getDatabase(application).toDoDao()
     // 获取数据库的接口
     private val repository:  ToDoRepository
-
+    // 获取数据库中的数据
     private val getAllData: LiveData<List<ToDoData>>
 
     // 用init初始化
